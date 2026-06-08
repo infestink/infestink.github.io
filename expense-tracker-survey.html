@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Finance Survey · 3 min</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1816;
+    --ink2: #4a4640;
+    --ink3: #9a948e;
+    --paper: #f7f4ef;
+    --paper2: #edeae3;
+    --paper3: #e2ddd6;
+    --accent: #c4622d;
+    --accent2: #e8b89a;
+    --line: rgba(26,24,22,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 0 0 80px;
+  }
+  /* subtle grain */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    background-size: 256px;
+    opacity: 0.6;
+  }
+
+  /* ─── Header ─── */
+  header {
+    position: relative; z-index: 1;
+    border-bottom: 1px solid var(--line);
+    padding: 48px 40px 36px;
+    max-width: 720px; margin: 0 auto;
+  }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; margin-bottom: 14px;
+  }
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 400; line-height: 1.15; color: var(--ink);
+    margin-bottom: 18px;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+  .intro {
+    font-size: 15px; line-height: 1.7; color: var(--ink2);
+    max-width: 540px;
+  }
+  .meta {
+    display: flex; gap: 24px; margin-top: 24px;
+    font-size: 12px; color: var(--ink3); letter-spacing: 0.04em;
+  }
+  .meta span { display: flex; align-items: center; gap: 6px; }
+  .meta span::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--paper3); display: inline-block; }
+
+  /* ─── Main ─── */
+  main {
+    position: relative; z-index: 1;
+    max-width: 720px; margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ─── Question blocks ─── */
+  .q-block {
+    border-bottom: 1px solid var(--line);
+    padding: 40px 0;
+    opacity: 0; transform: translateY(16px);
+    animation: fadein 0.5s forwards;
+  }
+  .q-block:nth-child(1) { animation-delay: 0.1s; }
+  .q-block:nth-child(2) { animation-delay: 0.18s; }
+  .q-block:nth-child(3) { animation-delay: 0.26s; }
+  .q-block:nth-child(4) { animation-delay: 0.34s; }
+  .q-block:nth-child(5) { animation-delay: 0.42s; }
+  .q-block:nth-child(6) { animation-delay: 0.50s; }
+  .q-block:nth-child(7) { animation-delay: 0.58s; }
+  .q-block:nth-child(8) { animation-delay: 0.66s; }
+  .q-block:nth-child(9) { animation-delay: 0.74s; }
+  @keyframes fadein {
+    to { opacity: 1; transform: none; }
+  }
+  .q-num {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink3); margin-bottom: 10px; font-weight: 400;
+  }
+  .q-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.3rem; line-height: 1.4; color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .q-hint {
+    font-size: 13px; color: var(--ink3); margin-bottom: 22px; line-height: 1.5;
+  }
+
+  /* ─── Option chips ─── */
+  .options { display: flex; flex-wrap: wrap; gap: 9px; }
+  .opt {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 16px; border-radius: 40px;
+    border: 1px solid var(--paper3);
+    background: var(--paper2);
+    font-size: 14px; color: var(--ink2); cursor: pointer;
+    transition: all 0.15s ease; user-select: none; font-family: 'DM Sans', sans-serif; font-weight: 400;
+  }
+  .opt:hover { border-color: var(--accent2); color: var(--ink); background: #fff; }
+  .opt.selected { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .opt .mark { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid currentColor; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 10px; transition: all 0.15s; }
+  .opt.selected .mark { background: rgba(255,255,255,0.25); border-color: transparent; }
+  .opt.selected .mark::after { content: '✓'; }
+
+  /* ─── Scale ─── */
+  .scale-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .scale-opt {
+    width: 44px; height: 44px; border-radius: 8px;
+    border: 1px solid var(--paper3); background: var(--paper2);
+    font-size: 14px; font-weight: 500; color: var(--ink2);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; font-family: 'DM Sans', sans-serif;
+  }
+  .scale-opt:hover { border-color: var(--accent2); background: #fff; }
+  .scale-opt.selected { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .scale-labels { display: flex; justify-content: space-between; width: 100%; margin-top: 6px; font-size: 11px; color: var(--ink3); letter-spacing: 0.03em; }
+
+  /* ─── Textarea ─── */
+  textarea {
+    width: 100%; padding: 14px 16px;
+    background: var(--paper2); border: 1px solid var(--paper3);
+    border-radius: 10px; color: var(--ink); font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 300; line-height: 1.6; resize: vertical; min-height: 100px;
+    transition: border-color 0.15s; outline: none;
+  }
+  textarea:focus { border-color: var(--accent2); background: #fff; }
+  textarea::placeholder { color: var(--ink3); }
+
+  /* ─── Submit ─── */
+  .submit-wrap {
+    padding: 40px 0 0; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    opacity: 0; animation: fadein 0.5s 0.82s forwards;
+  }
+  .btn-submit {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--ink); color: var(--paper); padding: 14px 28px;
+    border-radius: 40px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.02em;
+    transition: all 0.2s; position: relative; overflow: hidden;
+  }
+  .btn-submit:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-submit:active { transform: none; }
+  .btn-submit .arrow { transition: transform 0.2s; }
+  .btn-submit:hover .arrow { transform: translateX(4px); }
+  .privacy-note { font-size: 12px; color: var(--ink3); line-height: 1.5; max-width: 320px; }
+
+  /* ─── Thank you ─── */
+  #thankyou {
+    display: none; text-align: center; padding: 80px 40px;
+    max-width: 720px; margin: 0 auto; position: relative; z-index: 1;
+  }
+  #thankyou h2 { font-family: 'Instrument Serif', serif; font-size: 2.4rem; font-weight: 400; margin-bottom: 16px; }
+  #thankyou p { font-size: 15px; color: var(--ink2); line-height: 1.7; max-width: 480px; margin: 0 auto; }
+  .big-check { font-size: 48px; margin-bottom: 24px; }
+
+  /* ─── Copy result ─── */
+  #result-box {
+    display: none; margin-top: 24px;
+    background: var(--paper2); border: 1px solid var(--paper3);
+    border-radius: 12px; padding: 20px;
+  }
+  #result-box h3 { font-size: 13px; color: var(--ink3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+  #result-text {
+    font-size: 13px; color: var(--ink2); line-height: 1.7; white-space: pre-wrap;
+    font-family: var(--font-mono, monospace); max-height: 260px; overflow-y: auto;
+  }
+  .btn-copy {
+    margin-top: 14px; display: inline-flex; align-items: center; gap: 8px;
+    background: var(--paper3); border: 1px solid var(--line); border-radius: 30px;
+    padding: 8px 18px; font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.15s;
+  }
+  .btn-copy:hover { background: var(--ink); color: var(--paper); }
+
+  @media (max-width: 600px) {
+    header, main { padding-left: 20px; padding-right: 20px; }
+    .scale-row { gap: 5px; }
+    .scale-opt { width: 36px; height: 36px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Research · 3 minutes</div>
+  <h1>How do you <em>actually</em><br>track your money?</h1>
+  <p class="intro">A quick survey from a friend — no right or wrong answers. I'm building something to make personal finance less painful and your honest thoughts will shape it directly.</p>
+  <div class="meta">
+    <span>9 questions</span>
+    <span>Anonymous</span>
+    <span>No signup needed</span>
+  </div>
+</header>
+
+<main id="form">
+
+  <!-- Q1 -->
+  <div class="q-block">
+    <div class="q-num">01</div>
+    <div class="q-text">Do you currently track your personal expenses?</div>
+    <div class="q-hint">Pick the one that fits best</div>
+    <div class="options" data-q="q1" data-type="single">
+      <div class="opt" data-val="yes_actively"><span class="mark"></span>Yes, actively</div>
+      <div class="opt" data-val="sometimes"><span class="mark"></span>Sometimes / inconsistently</div>
+      <div class="opt" data-val="used_to"><span class="mark"></span>I used to but stopped</div>
+      <div class="opt" data-val="no"><span class="mark"></span>No, not really</div>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-block">
+    <div class="q-num">02</div>
+    <div class="q-text">If you do track, how?</div>
+    <div class="q-hint">Select all that apply</div>
+    <div class="options" data-q="q2" data-type="multi">
+      <div class="opt" data-val="excel_sheets"><span class="mark"></span>Excel / Google Sheets</div>
+      <div class="opt" data-val="bank_app"><span class="mark"></span>My bank / Revolut app</div>
+      <div class="opt" data-val="finance_app"><span class="mark"></span>A finance app (YNAB, Copilot…)</div>
+      <div class="opt" data-val="notebook"><span class="mark"></span>Pen & paper</div>
+      <div class="opt" data-val="memory"><span class="mark"></span>I just remember roughly</div>
+      <div class="opt" data-val="dont_track"><span class="mark"></span>I don't track</div>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-block">
+    <div class="q-num">03</div>
+    <div class="q-text">What's the most frustrating part of tracking your finances?</div>
+    <div class="q-hint">Pick your biggest pain</div>
+    <div class="options" data-q="q3" data-type="single">
+      <div class="opt" data-val="too_manual"><span class="mark"></span>It's too manual and time-consuming</div>
+      <div class="opt" data-val="forget_to_do_it"><span class="mark"></span>I keep forgetting to do it</div>
+      <div class="opt" data-val="data_scattered"><span class="mark"></span>My spending is spread across cards/apps</div>
+      <div class="opt" data-val="bank_linking_privacy"><span class="mark"></span>I don't want to link my bank to apps</div>
+      <div class="opt" data-val="not_insightful"><span class="mark"></span>The data is there but tells me nothing useful</div>
+      <div class="opt" data-val="no_frustration"><span class="mark"></span>Not really frustrated with it</div>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-block">
+    <div class="q-num">04</div>
+    <div class="q-text">Do you use Revolut, Wise, or both?</div>
+    <div class="q-hint">Select all that apply</div>
+    <div class="options" data-q="q4" data-type="multi">
+      <div class="opt" data-val="revolut"><span class="mark"></span>Revolut</div>
+      <div class="opt" data-val="wise"><span class="mark"></span>Wise</div>
+      <div class="opt" data-val="traditional_bank"><span class="mark"></span>Traditional bank primarily</div>
+      <div class="opt" data-val="none"><span class="mark"></span>Neither</div>
+    </div>
+  </div>
+
+  <!-- Q5 — scale -->
+  <div class="q-block">
+    <div class="q-num">05</div>
+    <div class="q-text">How well do you know where your money goes each month?</div>
+    <div class="q-hint">1 = "I have no idea" · 5 = "I know it down to the cent"</div>
+    <div class="scale-row" data-q="q5" data-type="scale">
+      <div class="scale-opt" data-val="1">1</div>
+      <div class="scale-opt" data-val="2">2</div>
+      <div class="scale-opt" data-val="3">3</div>
+      <div class="scale-opt" data-val="4">4</div>
+      <div class="scale-opt" data-val="5">5</div>
+    </div>
+    <div class="scale-labels"><span>No idea</span><span>Know it well</span></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-block">
+    <div class="q-num">06</div>
+    <div class="q-text">Would you be comfortable uploading your bank statement (as a file) to an app to get an automatic expense overview?</div>
+    <div class="q-hint">No bank linking — just a CSV or PDF export from your app</div>
+    <div class="options" data-q="q6" data-type="single">
+      <div class="opt" data-val="yes_definitely"><span class="mark"></span>Yes, that sounds great</div>
+      <div class="opt" data-val="yes_if_secure"><span class="mark"></span>Yes, if I trusted the security</div>
+      <div class="opt" data-val="maybe"><span class="mark"></span>Maybe — I'd want to know more</div>
+      <div class="opt" data-val="no_privacy"><span class="mark"></span>No — I'm uncomfortable sharing that data</div>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-block">
+    <div class="q-num">07</div>
+    <div class="q-text">Which features would be most useful to you?</div>
+    <div class="q-hint">Pick up to 3</div>
+    <div class="options" data-q="q7" data-type="multi" data-max="3">
+      <div class="opt" data-val="category_breakdown"><span class="mark"></span>Auto-categorized spending</div>
+      <div class="opt" data-val="monthly_overview"><span class="mark"></span>Monthly overview chart</div>
+      <div class="opt" data-val="budget_goals"><span class="mark"></span>Budget goals & limits</div>
+      <div class="opt" data-val="export_report"><span class="mark"></span>Export as PDF / Excel report</div>
+      <div class="opt" data-val="trend_over_time"><span class="mark"></span>Spending trends over time</div>
+      <div class="opt" data-val="ai_insights"><span class="mark"></span>AI insights ("you spend 40% more on food in winter")</div>
+    </div>
+  </div>
+
+  <!-- Q8 — price -->
+  <div class="q-block">
+    <div class="q-num">08</div>
+    <div class="q-text">If it saved you an hour a month of manual work, what would you pay?</div>
+    <div class="q-hint">For a premium version with full features</div>
+    <div class="options" data-q="q8" data-type="single">
+      <div class="opt" data-val="free_only"><span class="mark"></span>Nothing — only if it's free</div>
+      <div class="opt" data-val="1_3"><span class="mark"></span>€1–3 / month</div>
+      <div class="opt" data-val="4_7"><span class="mark"></span>€4–7 / month</div>
+      <div class="opt" data-val="8_plus"><span class="mark"></span>€8+ / month</div>
+      <div class="opt" data-val="one_time"><span class="mark"></span>I'd prefer a one-time purchase</div>
+    </div>
+  </div>
+
+  <!-- Q9 — open -->
+  <div class="q-block">
+    <div class="q-num">09</div>
+    <div class="q-text">Anything else you'd want from a tool like this?</div>
+    <div class="q-hint">Open field — even one sentence helps</div>
+    <textarea data-q="q9" placeholder="Any feature, concern, or wish you have…" rows="4"></textarea>
+  </div>
+
+  <div class="submit-wrap">
+    <button class="btn-submit" onclick="submitSurvey()">
+      Send my answers <span class="arrow">→</span>
+    </button>
+    <p class="privacy-note">Your answers are only seen by the person who shared this link. Nothing is stored on any server.</p>
+  </div>
+
+</main>
+
+<!-- Thank you screen -->
+<div id="thankyou">
+  <div class="big-check">✦</div>
+  <h2>Thank you so much.</h2>
+  <p>Your answers will directly shape what gets built. I'll share the result with you once the product launches.</p>
+  <div id="result-box">
+    <h3>Your responses (copy & share back)</h3>
+    <div id="result-text"></div>
+    <button class="btn-copy" onclick="copyResult()">Copy to clipboard</button>
+  </div>
+</div>
+
+<script>
+const answers = {};
+
+// Single-select chips
+document.querySelectorAll('[data-type="single"]').forEach(group => {
+  group.querySelectorAll('.opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      group.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      answers[group.dataset.q] = opt.dataset.val;
+    });
+  });
+});
+
+// Multi-select chips
+document.querySelectorAll('[data-type="multi"]').forEach(group => {
+  group.querySelectorAll('.opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const max = group.dataset.max ? parseInt(group.dataset.max) : 99;
+      const selected = group.querySelectorAll('.opt.selected');
+      if (opt.classList.contains('selected')) {
+        opt.classList.remove('selected');
+      } else {
+        if (selected.length >= max) {
+          group.querySelectorAll('.opt.selected')[0].classList.remove('selected');
+        }
+        opt.classList.add('selected');
+      }
+      answers[group.dataset.q] = [...group.querySelectorAll('.opt.selected')].map(o => o.dataset.val);
+    });
+  });
+});
+
+// Scale
+document.querySelectorAll('[data-type="scale"]').forEach(group => {
+  group.querySelectorAll('.scale-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      group.querySelectorAll('.scale-opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      answers[group.dataset.q] = opt.dataset.val;
+    });
+  });
+});
+
+// Textarea
+document.querySelector('textarea[data-q="q9"]').addEventListener('input', function() {
+  answers['q9'] = this.value;
+});
+
+const labels = {
+  q1: "Tracks expenses",
+  q2: "How they track",
+  q3: "Biggest frustration",
+  q4: "Apps used",
+  q5: "Financial awareness (1–5)",
+  q6: "Comfortable uploading statement",
+  q7: "Most wanted features",
+  q8: "Willingness to pay",
+  q9: "Open feedback"
+};
+
+const valueLabels = {
+  yes_actively: "Yes, actively",
+  sometimes: "Sometimes / inconsistently",
+  used_to: "Used to but stopped",
+  no: "No, not really",
+  excel_sheets: "Excel / Google Sheets",
+  bank_app: "Bank / Revolut app",
+  finance_app: "A finance app",
+  notebook: "Pen & paper",
+  memory: "Just memory",
+  dont_track: "Doesn't track",
+  too_manual: "Too manual & time-consuming",
+  forget_to_do_it: "Forgets to do it",
+  data_scattered: "Data scattered across apps",
+  bank_linking_privacy: "Privacy concerns with bank linking",
+  not_insightful: "Data not insightful enough",
+  no_frustration: "No frustration",
+  revolut: "Revolut",
+  wise: "Wise",
+  traditional_bank: "Traditional bank",
+  none: "Neither",
+  yes_definitely: "Yes, definitely",
+  yes_if_secure: "Yes, if secure",
+  maybe: "Maybe",
+  no_privacy: "No — privacy concern",
+  category_breakdown: "Auto-categorized spending",
+  monthly_overview: "Monthly overview chart",
+  budget_goals: "Budget goals & limits",
+  export_report: "Export as PDF/Excel",
+  trend_over_time: "Spending trends over time",
+  ai_insights: "AI insights",
+  free_only: "Free only",
+  "1_3": "€1–3 / month",
+  "4_7": "€4–7 / month",
+  "8_plus": "€8+ / month",
+  one_time: "One-time purchase"
+};
+
+function formatVal(val) {
+  if (Array.isArray(val)) return val.map(v => valueLabels[v] || v).join(', ');
+  return valueLabels[val] || val || '—';
+}
+
+function submitSurvey() {
+  const required = ['q1','q3','q5','q6','q8'];
+  const missing = required.filter(q => !answers[q]);
+  if (missing.length > 0) {
+    const firstMissing = document.querySelector(`[data-q="${missing[0]}"]`);
+    if (firstMissing) firstMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  let resultStr = '=== Survey Responses ===\n\n';
+  Object.entries(labels).forEach(([q, label]) => {
+    resultStr += `${label}:\n${formatVal(answers[q])}\n\n`;
+  });
+
+  document.getElementById('form').style.display = 'none';
+  const ty = document.getElementById('thankyou');
+  ty.style.display = 'block';
+  document.getElementById('result-text').textContent = resultStr;
+  document.getElementById('result-box').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyResult() {
+  const text = document.getElementById('result-text').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.btn-copy');
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => btn.textContent = 'Copy to clipboard', 2000);
+  });
+}
+</script>
+</body>
+</html>
